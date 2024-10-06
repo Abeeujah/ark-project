@@ -8,6 +8,7 @@ import {
 } from "starknet";
 
 import { SOLIS_ACCOUNT_CLASS_HASH } from "../../constants.js";
+import { AccountDeployFailedError } from "../../errors/actions.js";
 
 /**
  * Creates a new account on the StarkNet testnet.
@@ -53,11 +54,15 @@ export const createAccount = async (provider: ProviderInterface) => {
       addressSalt: publicKey
     });
   } catch (e) {
-    throw new Error(`Account deploy failed for ${address}`);
+    throw new AccountDeployFailedError(address, {
+      docsPath: "/create-account"
+    });
   }
 
   if (!response) {
-    throw new Error(`Account deploy failed for ${address}`);
+    throw new AccountDeployFailedError(address, {
+      docsPath: "/create-account"
+    });
   }
 
   const { transaction_hash, contract_address } = response;
