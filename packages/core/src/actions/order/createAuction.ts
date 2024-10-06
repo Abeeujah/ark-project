@@ -36,7 +36,7 @@ export interface CreateAuctionResult {
   transactionHash: string;
 }
 
-const docsPath = "/create-auction";
+const docsPath = "/sdk-core/create-auction";
 /**
  * Creates an Auction on the ArkProject.
  *
@@ -73,9 +73,7 @@ export async function createAuction(
   const maxEndedAt = now + 60 * 60 * 24 * 30;
 
   if (startedAt < now) {
-    throw new InvalidStartDateError(startDate, {
-      docsPath
-    });
+    throw new InvalidStartDateError(startDate, { docsPath });
   }
 
   if (endedAt < startedAt) {
